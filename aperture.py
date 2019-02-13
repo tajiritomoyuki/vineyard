@@ -60,6 +60,8 @@ def make_aperture(img, center, area_thresh=9):
     center_tuple = tuple(np.round(center).astype(np.uint8))
     #3sigma以上の切り出し領域を求める
     contours = trim_aperture(img, 3, mid_val, Q_std, area_thresh)
+    #4sigma以上の切り出し領域を求める
+    contours.append(trim_aperture(img, 4, mid_val, Q_std, area_thresh))
     for contour in contours:
         #中心が含まれているか確認
         test = cv2.pointPolygonTest(contour, center_tuple, False)
@@ -68,25 +70,13 @@ def make_aperture(img, center, area_thresh=9):
             aperture = np.zeros_like(img).astype(np.uint8)
             cv2.fillConvexPoly(aperture, points=contour, color=1)
             break
-    #3sigma以上の切り出しで失敗した場合
+    #決めかねてしまう場合
     else:
-        #4sigma以上の切り出し領域を求める
-        contours = trim_aperture(img, 4, mid_val, Q_std, area_thresh)
-        for contour in contours:
-            #中心が含まれているか確認
-            test = cv2.pointPolygonTest(contour, center_tuple, False)
-            if test >= 0:
-                #apertureを作成
-                aperture = np.zeros_like(img).astype(np.uint8)
-                cv2.fillConvexPoly(aperture, points=contour, color=1)
-                break
-        #それでも決めかねてしまう場合
-        else:
-            #中心含む4pixをapertureにする
-            offset = np.array([[0.5, 0.5], [0.5, -0.5], [-0.5, 0.5], [-0.5, -0.5]])
-            aperture_contour = np.round(center + offset).astype(np.int32)
-            aperture = np.zeros_like(img).astype(np.uint8)
-            cv2.fillConvexPoly(aperture, points=aperture_contour, color=1)
+        #中心含む4pixをapertureにする
+        offset = np.array([[0.5, 0.5], [0.5, -0.5], [-0.5, 0.5], [-0.5, -0.5]])
+        aperture_contour = np.round(center + offset).astype(np.int32)
+        aperture = np.zeros_like(img).astype(np.uint8)
+        cv2.fillConvexPoly(aperture, points=aperture_contour, color=1)
     return aperture
 
 def make_background(img, center, aperture, sigma=1, bg_thresh=20):
