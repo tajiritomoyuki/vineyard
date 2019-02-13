@@ -167,9 +167,9 @@ def main(h5path):
 if __name__ == '__main__':
     #ファイルリストを取得
     h5list = load_h5()
-    for h5path in tqdm(h5list):
-        #try:
-        main(h5path)
-        #except:
-        #    pass
+    # for h5path in tqdm(h5list):
+    #     #try:
+    #     main(h5path)
+    #     #except:
+    #     #    pass
     Parallel(n_jobs=16)(delayed(main)(h5path) for h5path in tqdm(h5list))
