@@ -6,6 +6,8 @@ from scipy import stats, signal
 import glob
 import cv2
 import h5py
+from joblib import Parallel, delayed
+import multiprocessing
 from tqdm import tqdm
 from astropy.io import fits
 from astroquery.mast import Catalogs
@@ -170,3 +172,4 @@ if __name__ == '__main__':
         main(h5path)
         #except:
         #    pass
+    Parallel(n_jobs=16)(delayed(main)(h5path) for h5path in tqdm(h5list))
