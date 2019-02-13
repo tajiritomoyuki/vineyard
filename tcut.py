@@ -77,15 +77,15 @@ def make_quality_flag_(x_center, y_center, sigma=2.):
     quality = np.logical_or(x_cond, y_cond)
     return quality
 
-def make_quality_flag(sector, camera, CCD, sigma=1.8):
+def make_quality_flag(sector, camera, CCD, sigma=2.):
     #カメラ中のすべてのqualityを統合
     quality_list = []
     print("caliculating quality...")
-    for i in range(1, 5):
-        fitslist = loadFFI(sector, camera, i)
+    for came, chi in product("1234", "1234"):
+        fitslist = loadFFI(sector, came, chi)
         x_center = np.array([])
         y_center = np.array([])
-        print("camera%s..." % i)
+        print("camera%s chip%s..." % (came, chi))
         for fitspath in tqdm(fitslist):
             #x, y座標を格納
             with fits.open(fitspath) as hdu:
@@ -102,16 +102,10 @@ def make_quality_flag(sector, camera, CCD, sigma=1.8):
         x_cond = np.logical_or(x_center > x_mean + sigma * x_std, x_center < x_mean - sigma * x_std)
         y_cond = np.logical_or(y_center > y_mean + sigma * y_std, y_center < y_mean - sigma * y_std)
         quality = np.logical_or(x_cond, y_cond)
-        #1-2-1のみ他と長さが違うので例外処理
-        if sector == "1" and camera == "2" and i == 1:
-            quality = np.hstack((quality, False))
         quality_list.append(quality)
     quality_arr = np.sum(np.vstack(quality_list), axis=0)
     quality_arr = np.where(quality_arr > 0, 1, 0)
     quality_arr = binary_dilation(quality_arr)
-    #1-2-1のみ他と長さが違うので例外処理
-    if sector == "1" and camera == "2" and CCD == "1":
-        quality_arr = quality_arr[:-1]
     return quality_arr
 
 def radec2pix(ra, dec, wcs):
