@@ -79,7 +79,7 @@ def cut(x, y, FFIflux, size=(11, 11)):
     return flux, cx, cy
 
 def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux):
-    tpfname = "tpf_%s_%s_%s_%s.h5" % (TID, sector, camera, CCD)
+    tpfname = "tess_%s_%s_%s_%s.h5" % (TID, sector, camera, CCD)
     tpfpath = os.path.join(outputdir, tpfname)
     with h5py.File(tpfpath, "w") as f:
         f.create_group("header")
