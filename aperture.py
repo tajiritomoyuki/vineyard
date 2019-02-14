@@ -13,11 +13,11 @@ from astropy.io import fits
 from astroquery.mast import Catalogs
 import matplotlib.pyplot as plt
 
-datadir = "/pike/tess/data/tesscut"
-dstdir = "/pike/tess/data/tcut"
+step1 = "/pike/pipeline/step1"
+step2 = "/pike/pipeline/step2"
 
 def load_h5():
-    h5list = glob.glob(os.path.join(datadir, "*.h5"))
+    h5list = glob.glob(os.path.join(step1, "*.h5"))
     return h5list
 
 def load_data(f):
@@ -151,7 +151,7 @@ def main(h5path):
             aperture_frame = np.where(aperture == 1, calibrated_flux, 0)
             sap_flux = np.sum(aperture_frame, axis=(1, 2))
             #出力
-            dstpath = os.path.join(dstdir, h5name)
+            dstpath = os.path.join(step2, h5name)
             save(dstpath, f, aperture, bkg_aperture, calibrated_flux, time, sap_flux)
 
 if __name__ == '__main__':

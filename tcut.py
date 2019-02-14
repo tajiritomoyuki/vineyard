@@ -13,13 +13,10 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 
-rootdir = os.path.abspath(os.path.join(__file__))
-#データの元ディレクトリ
-datadir = "/pike/tess/data"
 #FFIのディレクトリ
-FFIdir = os.path.join(datadir, "FFI")
+FFIdir = "/manta/tess/data/FFI"
 #出力先のディレクトリ
-outputdir = os.path.join(datadir, "tesscut")
+outputdir = "/pike/pipeline/step1"
 
 #SQLにログインするためのデータ
 sql_data = {
