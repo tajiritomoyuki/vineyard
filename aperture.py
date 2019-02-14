@@ -107,8 +107,8 @@ def make_background(img, center, aperture, sigma=1, bg_thresh=20):
         bg_aperture = np.zeros_like(aperture)
     return bg_aperture
 
-def save(dstpathm, fr, aperture, bkg_aperture, calibrated_flux, time, sap_flux):
-    with h5py.File(dstpathm, "w") as fw:
+def save(dstpath, fr, aperture, bkg_aperture, calibrated_flux, time, sap_flux):
+    with h5py.File(dstpath, "w") as fw:
         #グループを作成
         fw_header = fw.create_group("header")
         fw_TPF = fw.create_group("TPF")

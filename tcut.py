@@ -66,48 +66,6 @@ def get_wcs(fitsfile):
     hdu.close()
     return wcs, bounds
 
-def make_quality_flag_(x_center, y_center, sigma=2.):
-    x_mean = np.nanmean(x)
-    y_mean = np.nanmean(y)
-    x_std = np.nanstd(x)
-    y_std = np.nanstd(y)
-    #sigma以上離れている点を1とする
-    x_cond = np.logical_or(x > x_mean + sigma * x_std, x < x_mean - sigma * x_std)
-    y_cond = np.logical_or(y > y_mean + sigma * y_std, y < y_mean - sigma * y_std)
-    quality = np.logical_or(x_cond, y_cond)
-    return quality
-
-def make_quality_flag(sector, camera, CCD, sigma=2.):
-    #カメラ中のすべてのqualityを統合
-    quality_list = []
-    print("caliculating quality...")
-    for came, chi in product("1234", "1234"):
-        fitslist = loadFFI(sector, came, chi)
-        x_center = np.array([])
-        y_center = np.array([])
-        print("camera%s chip%s..." % (came, chi))
-        for fitspath in tqdm(fitslist):
-            #x, y座標を格納
-            with fits.open(fitspath) as hdu:
-                x = hdu[1].header["CRVAL1"]
-                y = hdu[1].header["CRVAL2"]
-                x_center = np.hstack((x_center, x))
-                y_center = np.hstack((y_center, y))
-        #統計値を算出
-        x_mean = np.nanmean(x_center)
-        y_mean = np.nanmean(y_center)
-        x_std = np.nanstd(x_center)
-        y_std = np.nanstd(y_center)
-        #sigma以上離れている点を1とする
-        x_cond = np.logical_or(x_center > x_mean + sigma * x_std, x_center < x_mean - sigma * x_std)
-        y_cond = np.logical_or(y_center > y_mean + sigma * y_std, y_center < y_mean - sigma * y_std)
-        quality = np.logical_or(x_cond, y_cond)
-        quality_list.append(quality)
-    quality_arr = np.sum(np.vstack(quality_list), axis=0)
-    quality_arr = np.where(quality_arr > 0, 1, 0)
-    quality_arr = binary_dilation(quality_arr)
-    return quality_arr
-
 def radec2pix(ra, dec, wcs):
     coord = SkyCoord(ra, dec, unit="deg")
     px, py = coord.to_pixel(wcs)
@@ -123,7 +81,7 @@ def cut(x, y, FFIflux, size=(11, 11)):
     cy = height + y - y_int
     return flux, cx, cy
 
-def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux, quality):
+def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux):
     tpfname = "tpf_%s_%s_%s_%s.h5" % (TID, sector, camera, CCD)
     tpfpath = os.path.join(outputdir, tpfname)
     with h5py.File(tpfpath, "w") as f:
@@ -142,7 +100,7 @@ def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux, qual
         f.create_dataset("header/cy", data=cy)
         f.create_dataset("TPF/TIME", data=time)
         f.create_dataset("TPF/ROW_CNTS", data=flux)
-        f.create_dataset("TPF/QUALITY", data=quality)
+        # f.create_dataset("TPF/QUALITY", data=quality)
 
 def main(sector, camera, CCD):
     #ID, ra, dec, Tmagデータを読み込み
@@ -153,8 +111,6 @@ def main(sector, camera, CCD):
     time, FFIflux = fits2data(fitslist)
     #wcsを取得
     wcs, bounds = get_wcs(fitslist[0])
-    #quality_flagを作成
-    quality = make_quality_flag(sector, camera, CCD)
     print("making h5file...")
     for TID, ra, dec, Tmag in tqdm(data):
         #ra, decからpixelを抽出
@@ -162,7 +118,7 @@ def main(sector, camera, CCD):
         #pixel情報からFFIを切り出し
         flux, cx, cy = cut(x, y, FFIflux)
         #出力
-        save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux, quality)
+        save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux)
     del FFIflux
 
 if __name__ == '__main__':
