@@ -13,13 +13,9 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 
-#データの元ディレクトリ
-datadir = "/pike/tess/data"
-#FFIのディレクトリ
-FFIdir = os.path.join(datadir, "FFI")
-
-step2 = os.path.join(datadir, "step2")
-step3 = os.path.join(datadir, "step3")
+FFIdir = "/manta/tess/data/FFI"
+step2 = "/pike/pipeline/step2"
+step3 = "/pike/pipeline/step3"
 
 def loadFFI(sector, camera, CCD):
     fitslist = glob.glob(os.path.join(FFIdir, "*%s-%s-%s-*ffic.fits" % (sector, camera, CCD)))
