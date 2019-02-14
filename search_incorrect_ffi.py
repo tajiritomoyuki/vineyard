@@ -19,7 +19,8 @@ def search(fitspath):
     except:
         fitsname = os.path.basename(fitspath)
         cmd = "curl -C - -L -o %s https://mast.stsci.edu/api/v0.1/Download/file/?uri=mast:TESS/product/%s" % (fitsname, fitsname)
-        subprocess.run(cmd)
+        # subprocess.run(cmd)
+        print(cmd)
 
 def main():
     fitslist = glob.glob(os.path.join(datadir, "*ffic.fits"))
