@@ -97,7 +97,6 @@ def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux):
         f.create_dataset("header/cy", data=cy)
         f.create_dataset("TPF/TIME", data=time)
         f.create_dataset("TPF/ROW_CNTS", data=flux)
-        # f.create_dataset("TPF/QUALITY", data=quality)
 
 def main(sector, camera, CCD):
     #ID, ra, dec, Tmagデータを読み込み
