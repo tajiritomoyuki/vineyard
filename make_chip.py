@@ -45,6 +45,5 @@ def main():
         process(s, x, y, result)
 
 
-
 if __name__ == '__main__':
     main()
