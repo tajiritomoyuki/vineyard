@@ -16,7 +16,7 @@ data = {
     "host" : "localhost",
     "db" : "TESS"
 }
-datadir = "/pike/tess/data/FFI"
+datadir = "/manta/tess/data/FFI"
 
 def process(s, x, y, result):
     fitslist = glob.glob(os.path.join(datadir, "*%s-%s-%s*.fits" % (s, x, y)))
