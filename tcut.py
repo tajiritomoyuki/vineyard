@@ -79,7 +79,7 @@ def cut(x, y, FFIflux, size=(11, 11)):
     return flux, cx, cy
 
 def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux):
-    tpfname = "tpf_%s_%s_%s_%s.h5" % (TID, sector, camera, CCD)
+    tpfname = "tess_%s_%s_%s_%s.h5" % (TID, sector, camera, CCD)
     tpfpath = os.path.join(outputdir, tpfname)
     with h5py.File(tpfpath, "w") as f:
         f.create_group("header")
@@ -97,7 +97,6 @@ def save(TID, sector, camera, CCD, ra, dec, Tmag, x, y, cx, cy, time, flux):
         f.create_dataset("header/cy", data=cy)
         f.create_dataset("TPF/TIME", data=time)
         f.create_dataset("TPF/ROW_CNTS", data=flux)
-        # f.create_dataset("TPF/QUALITY", data=quality)
 
 def main(sector, camera, CCD):
     #ID, ra, dec, Tmagデータを読み込み
