@@ -18,8 +18,8 @@ def search(fitspath):
     #もし不正なfitsファイルが有ったばあい、再ダウンロード
     except:
         fitsname = os.path.basename(fitspath)
-        cmd = "curl -C - -L -o /manta/tess/data/FFI/%s https://mast.stsci.edu/api/v0.1/Download/file/?uri=mast:TESS/product/%s" % (fitspath, fitsname)
-        subprocess.run(cmd)
+        cmd = "curl -C - -L -o %s https://mast.stsci.edu/api/v0.1/Download/file/?uri=mast:TESS/product/%s" % (fitspath, fitsname)
+        subprocess.run(cmd, shell=True)
 
 def main():
     fitslist = glob.glob(os.path.join(datadir, "*ffic.fits"))

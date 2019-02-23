@@ -14,8 +14,8 @@ def check_lack(date, sector, camera, chip, yonmoji):
     tarname = "%s-s000%s-%s-%s-%s-s_ffic.fits" % (date, sector, camera, chip, yonmoji)
     tarpath = os.path.join(datadir, tarname)
     if not os.path.exists(tarpath):
-        cmd = "curl -C - -L -o /manta/tess/data/FFI/%s https://mast.stsci.edu/api/v0.1/Download/file/?uri=mast:TESS/product/%s" % (tarpath, tarname)
-        subprocess.run(cmd)
+        cmd = "curl -C - -L -o %s https://mast.stsci.edu/api/v0.1/Download/file/?uri=mast:TESS/product/%s" % (tarpath, tarname)
+        subprocess.run(cmd, shell=True)
 
 def main():
     #各セクターごとに足りないFFIがないか検索
