@@ -23,7 +23,7 @@ def main():
         fitslist = glob.glob(os.path.join(datadir, "*s000%s*ffic.fits" % sector))
         datelist = list(set([os.path.basename(fitspath).split("-")[0] for fitspath in fitslist]))
         yonmoji = fitslist[0].split("-")[4]
-        Parallel(n_jobs=16)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
+        Parallel(n_jobs=5)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
 
 
 if __name__ == '__main__':
