@@ -29,7 +29,6 @@ def gather_hdf(sector):
 def fits2pos(fitslist):
     x_center = np.array([])
     y_center = np.array([])
-    print("camera%s chip%s..." % (came, chi))
     for fitspath in tqdm(fitslist):
         #x, y座標を格納
         with fits.open(fitspath) as hdu:
