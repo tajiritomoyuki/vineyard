@@ -55,6 +55,7 @@ def make_quality_flag(sector, sigma=2.):
     quality_list = []
     print("caliculating quality...")
     for came, chi in product("1234", "1234"):
+        print("camera%s chip%s" % (came, chi))
         #FFIを取得
         fitslist = loadFFI(sector, came, chi)
         #x, yの位置の時系列データを取得
