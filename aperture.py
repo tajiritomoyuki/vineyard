@@ -63,7 +63,6 @@ def make_aperture(img, center, area_thresh=9):
     #4sigma以上の切り出し領域を求める
     contours.extend(trim_aperture(img, 4, mid_val, Q_std, area_thresh))
     for contour in contours:
-        print(contour)
         #中心が含まれているか確認
         test = cv2.pointPolygonTest(contour, center_tuple, False)
         if test >= 0:
@@ -120,7 +119,7 @@ def save(dstpath, fr, aperture, bkg_aperture, calibrated_flux, time, sap_flux):
             fr.copy("header/%s" % item, fw_header)
         for item in fr["TPF"].keys():
             fr.copy("TPF/%s" % item, fw_TPF)
-        fr.copy("TPF/QUALITY", fw_LC)
+        # fr.copy("TPF/QUALITY", fw_LC)
         #データを格納
         fw.create_dataset("TPF/FLUX", data=calibrated_flux)
         fw.create_dataset("LC/TIME", data=time)
