@@ -48,6 +48,7 @@ def pos2quality(x_center, y_center, sigma):
     x_cond = np.logical_or(x_center > x_mean + sigma * x_std, x_center < x_mean - sigma * x_std)
     y_cond = np.logical_or(y_center > y_mean + sigma * y_std, y_center < y_mean - sigma * y_std)
     quality = np.logical_or(x_cond, y_cond)
+    return quality
 
 def make_quality_flag(sector, sigma=2.):
     #セクター中のすべてのqualityを統合
