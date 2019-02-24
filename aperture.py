@@ -61,7 +61,7 @@ def make_aperture(img, center, area_thresh=9):
     #3sigma以上の切り出し領域を求める
     contours = trim_aperture(img, 3, mid_val, Q_std, area_thresh)
     #4sigma以上の切り出し領域を求める
-    contours.append(trim_aperture(img, 4, mid_val, Q_std, area_thresh))
+    contours.extend(trim_aperture(img, 4, mid_val, Q_std, area_thresh))
     print(contours)
     for contour in contours:
         #中心が含まれているか確認
