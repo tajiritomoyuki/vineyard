@@ -23,7 +23,7 @@ datadir = "/manta/tess/data/FFI"
 
 def get_TIC(Tmag_limit):
     con = MySQLdb.connect(**data)
-    query = "select ID, ra, `dec` from TICv7s where Tmag < %s and limit=50;" % Tmag_limit
+    query = "select ID, ra, `dec` from TICv7s where Tmag < %s and limit 50;" % Tmag_limit
     TICdf = pdsql.read_sql(query, con)
     con.close()
     return TICdf
