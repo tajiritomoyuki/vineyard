@@ -35,10 +35,9 @@ def fits2pos(fitslist):
             try:
                 x = hdu[1].header["CRVAL1"]
                 y = hdu[1].header["CRVAL2"]
+            #何故かかけている時があるのでそういう場合は削除
             except:
-                print(fitspath)
-                x = hdu[1].header["CRVAL1"]
-                y = hdu[1].header["CRVAL2"]
+                x = y = 0.
             x_center = np.hstack((x_center, x))
             y_center = np.hstack((y_center, y))
     return x_center, y_center
