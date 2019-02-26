@@ -43,12 +43,11 @@ def omit_dupilication(TICdf, CTLdf):
     iterator = TICdf["ID"].__iter__()
     #https://nb4799.neu.edu/wordpress/?p=783
     ctx = mp.get_context("spawn")
-    print("now")
     manager = mp.Manager()
     CTLdf_shared = manager.list(CTLdf)
-    print("now")
     with ctx.Pool(mp.cpu_count()) as p:
         v = p.imap_unordered(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
+    print("now")
     for TID in v:
         print(TID)
 
