@@ -48,7 +48,7 @@ def omit_dupilication(TICdf, CTLdf):
     with ctx.Pool(mp.cpu_count()) as p:
         v = p.imap_unordered(get_process_memory, iterator)
     for TID in v:
-        return TID
+        print(TID)
 
 def main():
     Tmag_limit = 13
