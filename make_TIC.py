@@ -35,9 +35,9 @@ def get_CTL(Tmag_limit):
 
 def main():
     Tmag_limit = 13
-    TIC = get_TIC(Tmag_limit)
-    CTL = get_CTL(Tmag_limit)
-
+    # TIC = get_TIC(Tmag_limit)
+    CTLdf = get_CTL(Tmag_limit)
+    print(CTLdf)
 
 if __name__ == '__main__':
     main()
