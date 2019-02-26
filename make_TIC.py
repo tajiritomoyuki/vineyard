@@ -8,6 +8,7 @@ from tqdm import tqdm
 from itertools import product
 import MySQLdb
 import multiprocessing as mp
+import functools
 
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
@@ -35,19 +36,18 @@ def get_CTL(Tmag_limit):
     con.close()
     return CTLdf
 
-def make_iter(TICdf, CTLdf):
-    for TID in TICdf["ID"].__iter__():
-        yield TID, CTLdf
-
 def omit(TID, CTLdf):
     return TID
 
 def omit_dupilication(TICdf, CTLdf):
-    iterator = make_iter(TICdf, CTLdf)
+    iterator = TICdf["ID"].__iter__()
+    #https://nb4799.neu.edu/wordpress/?p=783
     ctx = mp.get_context("spawn")
+    manager = mp.Manager()
+    CTLdf_shared = manager.list(CTLdf)
     with ctx.Pool(mp.cpu_count()) as p:
-        v = p.imap_unordered(omit, iterator)
-    for TID, _ in iterator:
+        v = p.imap_unordered(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
+    for TID in v:
         print(TID)
 
 def main():
