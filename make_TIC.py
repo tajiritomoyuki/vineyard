@@ -54,6 +54,7 @@ def main():
     Tmag_limit = 13
     TIC = get_TIC(Tmag_limit)
     CTLdf = get_CTL(Tmag_limit)
+    omit_dupilication(TICdf, CTLdf)
 
 if __name__ == '__main__':
     main()
