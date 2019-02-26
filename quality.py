@@ -91,7 +91,7 @@ def add_quality_flg(h5path, quality_arr):
 
 def main():
     #各セクターごとにクオリティフラグを作成
-    for sector in range(1, 5):
+    for sector in [5]:
         quality_arr = make_quality_flag(sector)
         #hdf集める
         h5list = gather_hdf(sector)
