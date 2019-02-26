@@ -31,7 +31,7 @@ def get_TIC(Tmag_limit):
 def get_CTL(Tmag_limit):
     con = MySQLdb.connect(**data)
     query = "select ID from CTLv7 where Tmag < %s and `dec`<0;" % Tmag_limit
-    CTLdf = pdsql.read_sql(query, cursor)
+    CTLdf = pdsql.read_sql(query, con)
     con.close()
     return CTLdf
 
