@@ -32,8 +32,13 @@ def fits2pos(fitslist):
     for fitspath in tqdm(fitslist):
         #x, y座標を格納
         with fits.open(fitspath) as hdu:
-            x = hdu[1].header["CRVAL1"]
-            y = hdu[1].header["CRVAL2"]
+            try:
+                x = hdu[1].header["CRVAL1"]
+                y = hdu[1].header["CRVAL2"]
+            except:
+                print(fitspath)
+                x = hdu[1].header["CRVAL1"]
+                y = hdu[1].header["CRVAL2"]
             x_center = np.hstack((x_center, x))
             y_center = np.hstack((y_center, y))
     return x_center, y_center
