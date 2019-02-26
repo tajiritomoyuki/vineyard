@@ -3,12 +3,11 @@ import os
 import numpy as np
 import pandas as pd
 import pandas.io.sql as pdsql
-import psutil
 import glob
 from tqdm import tqdm
 from itertools import product
 import MySQLdb
-from joblib import Parallel, delayed
+import multiprocessing as mp
 
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
@@ -24,7 +23,7 @@ datadir = "/manta/tess/data/FFI"
 
 def get_TIC(Tmag_limit):
     con = MySQLdb.connect(**data)
-    query = "select ID, ra, `dec` from TICv7s where Tmag < %s;" % Tmag_limit
+    query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit=50;" % Tmag_limit
     TICdf = pdsql.read_sql(query, con)
     con.close()
     return TICdf
@@ -36,14 +35,25 @@ def get_CTL(Tmag_limit):
     con.close()
     return CTLdf
 
+def make_iter(TICdf, CTLdf):
+    for TID in TICdf["ID"].__iter__():
+        yield TID, CTLdf
+
+def omit(TID, CTLdf):
+    return TID
+
+def omit_dupilication(TICdf, CTLdf):
+    iterator = make_iter(TICdf, CTLdf)
+    ctx = mp.get_context("spawn")
+    with ctx.Pool(mp.cpu_count()) as p:
+        v = p.imap_unordered(get_process_memory, iterator)
+    for TID in v:
+        return TID
+
 def main():
     Tmag_limit = 13
-    # TIC = get_TIC(Tmag_limit)
+    TIC = get_TIC(Tmag_limit)
     CTLdf = get_CTL(Tmag_limit)
-    print(CTLdf)
-    current_process = psutil.Process(os.getpid())
-    memory = current_process.memory_info().rss
-    print(memory // 1e6)
 
 if __name__ == '__main__':
     main()
