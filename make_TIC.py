@@ -52,7 +52,7 @@ def omit_dupilication(TICdf, CTLdf):
 
 def main():
     Tmag_limit = 13
-    TIC = get_TIC(Tmag_limit)
+    TICdf = get_TIC(Tmag_limit)
     CTLdf = get_CTL(Tmag_limit)
     omit_dupilication(TICdf, CTLdf)
 
