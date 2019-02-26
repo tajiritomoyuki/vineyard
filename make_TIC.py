@@ -3,6 +3,7 @@ import os
 import numpy as np
 import pandas as pd
 import pandas.io.sql as pdsql
+import psutil
 import glob
 from tqdm import tqdm
 from itertools import product
@@ -40,6 +41,9 @@ def main():
     # TIC = get_TIC(Tmag_limit)
     CTLdf = get_CTL(Tmag_limit)
     print(CTLdf)
+    current_process = psutil.Process(os.getpid())
+    memory = current_process.memory_info().rss
+    print(memory // 1e6)
 
 if __name__ == '__main__':
     main()
