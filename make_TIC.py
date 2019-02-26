@@ -22,15 +22,17 @@ data = {
 datadir = "/manta/tess/data/FFI"
 
 def get_TIC(Tmag_limit):
-    with MySQLdb.connect(**data) as cursor:
-        query = "select ID, ra, `dec` from TICv7s where Tmag < %s;" % Tmag_limit
-        TICdf = pdsql.read_sql(query, cursor)
+    con = MySQLdb.connect(**data)
+    query = "select ID, ra, `dec` from TICv7s where Tmag < %s;" % Tmag_limit
+    TICdf = pdsql.read_sql(query, con)
+    con.close()
     return TICdf
 
 def get_CTL(Tmag_limit):
-    with MySQLdb.connect(**data) as cursor:
-        query = "select ID from CTLv7 where Tmag < %s and `dec`<0;" % Tmag_limit
-        CTLdf = pdsql.read_sql(query, cursor)
+    con = MySQLdb.connect(**data)
+    query = "select ID from CTLv7 where Tmag < %s and `dec`<0;" % Tmag_limit
+    CTLdf = pdsql.read_sql(query, cursor)
+    con.close()
     return CTLdf
 
 def main():
