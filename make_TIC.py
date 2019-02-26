@@ -47,7 +47,7 @@ def omit_dupilication(TICdf, CTLdf):
     ctx = mp.get_context("spawn")
     with ctx.Pool(mp.cpu_count()) as p:
         v = p.imap_unordered(omit, iterator)
-    for TID in v:
+    for TID, _ in iterator:
         print(TID)
 
 def main():
