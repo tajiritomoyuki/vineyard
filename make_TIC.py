@@ -41,11 +41,11 @@ class Register():
         try:
             px, py = coord.to_pixel(wcs)
             if (px < bounds[0]) and (px > 0) and (py < bounds[1]) and (py > 0):
-                with MySQLdb.connect(**data) as cursor:
-                    query = "INSERT INTO chip%s_%s_%s SELECT * FROM TICv7s_has_key WHERE ID=%s" % (self.sector, self.camera, self.chip, ID)
-                    print(query)
+                # with MySQLdb.connect(**data) as cursor:
+                query = "INSERT INTO chip%s_%s_%s SELECT * FROM TICv7s_has_key WHERE ID=%s" % (self.sector, self.camera, self.chip, ID)
+                print(query)
                     # cursor.execute(query)
-        except:
+        except NoConvergence:
             pass
 
     def register(self, TICdf):
