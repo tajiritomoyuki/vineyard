@@ -42,9 +42,9 @@ class Register():
         try:
             px, py = coord.to_pixel(self.wcs)
             if (px < self.bounds[0]) and (px > 0) and (py < self.bounds[1]) and (py > 0):
-                # with MySQLdb.connect(**data) as cursor:
-                query = "INSERT INTO chip%s_%s_%s SELECT * FROM TICv7s_has_key WHERE ID=%s" % (self.sector, self.camera, self.chip, ID)
-                    # cursor.execute(query)
+                with MySQLdb.connect(**data) as cursor:
+                    query = "INSERT INTO chip%s_%s_%s SELECT * FROM TICv7s_has_key WHERE ID=%s" % (self.sector, self.camera, self.chip, ID)
+                    cursor.execute(query)
         except NoConvergence:
             pass
 
@@ -60,7 +60,7 @@ def get_TIC(Tmag_limit):
     # TICdf = pdsql.read_sql(query, con)
     # con.close()
     with MySQLdb.connect(**data) as cursor:
-        query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 200000;" % Tmag_limit
+        query = "select ID, ra, `dec` from TICv7s where Tmag < %s;" % Tmag_limit
         cursor.execute(query)
         result = cursor.fetchall()
     return result
