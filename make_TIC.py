@@ -44,7 +44,6 @@ class Register():
             if (px < self.bounds[0]) and (px > 0) and (py < self.bounds[1]) and (py > 0):
                 # with MySQLdb.connect(**data) as cursor:
                 query = "INSERT INTO chip%s_%s_%s SELECT * FROM TICv7s_has_key WHERE ID=%s" % (self.sector, self.camera, self.chip, ID)
-                print(query)
                     # cursor.execute(query)
         except NoConvergence:
             pass
@@ -53,7 +52,7 @@ class Register():
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
             print("now")
-            p.map(self.check_coord, TICresult)
+            p.map(self.check_coord, tqdm(TICresult))
 
 def get_TIC(Tmag_limit):
     # con = MySQLdb.connect(**data)
