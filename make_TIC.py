@@ -44,9 +44,9 @@ def omit_dupilication(TICdf, CTLdf):
     #https://nb4799.neu.edu/wordpress/?p=783
     ctx = mp.get_context("spawn")
     manager = mp.Manager()
-    CTLdf_shared = manager.list(CTLdf)
+    CTLdf_shared = manager.list(CTLdf.values.tolist())
     with ctx.Pool(mp.cpu_count()) as p:
-        v = p.map(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
+        v = p.imap(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
     for TID in v:
         print(TID)
 
