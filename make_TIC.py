@@ -8,7 +8,6 @@ from tqdm import tqdm
 from itertools import product
 import MySQLdb
 import multiprocessing as mp
-import functools
 
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
@@ -52,7 +51,7 @@ class Register():
     def register(self, TICdf):
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
-            p.imap_unordered(check_coord, TICdf.iterrows())
+            p.imap_unordered(self.check_coord, TICdf.iterrows())
 
 def get_TIC(Tmag_limit):
     con = MySQLdb.connect(**data)
