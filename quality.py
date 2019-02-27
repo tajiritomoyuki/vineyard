@@ -64,8 +64,23 @@ def make_quality_flag(sector, sigma=2.):
         fitslist = loadFFI(sector, came, chi)
         #x, yの位置の時系列データを取得
         x_center, y_center = fits2pos(fitslist)
-        #x, yの位置の時系列データからqualityを算出
-        quality = pos2quality(x_center, y_center, sigma)
+        #sector4のみ別処理
+        if sector == 4:
+            #差分を取得
+            x_diff1 = np.diff(x_center)
+            y_diff1 = np.diff(y_center)
+            #差分でqualityを取得
+            quality1 = pos2quality(x_diff1, y_diff1, sigma)
+            #quality除去した差分を再取得
+            x_diff2 = np.where(quality1, np.nan, x_diff1)
+            y_diff2 = np.where(quality1, np.nan, y_diff1)
+            #差分でqualityを再取得
+            quality2 = pos2quality(x_diff2, y_diff2, 3.)
+            #両者で少なくともひとつひっかかったqualityを集める
+            quality = np.logical_or(quality1, quality2)
+        else:
+            #x, yの位置の時系列データからqualityを算出
+            quality = pos2quality(x_center, y_center, sigma)
         quality_list.append(quality)
     #qualityが少なくとも1つ以上1であったらフラグを立てる
     quality_arr = np.sum(np.vstack(quality_list), axis=0)
