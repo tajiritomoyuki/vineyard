@@ -36,8 +36,8 @@ class Register():
         self.bounds = hdu[1].data.shape
         hdu.close()
 
-    def check_coord(self, ID, ra, dec):
-        print(ID, ra, dec, self.sector)
+    def check_coord(self, row):
+        print(row, self.sector)
         coord = SkyCoord(ra, dec, unit="deg")
         try:
             px, py = coord.to_pixel(wcs)
