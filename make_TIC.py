@@ -49,7 +49,7 @@ class Register():
         except NoConvergence:
             pass
 
-    def register(self, TICdf):
+    def register(self, TICresult):
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
             print("now")
