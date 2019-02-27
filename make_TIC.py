@@ -87,12 +87,10 @@ def main():
     CTLdf = get_CTL(Tmag_limit)
     print("now")
     for sector, camera, chip in product("12345", "1234", "1234"):
-        print("now")
         regi = Register(sector, camera, chip)
-        print("now")
         regi.get_wcs()
         print("now")
-        regi.register()
+        regi.register(TICdf)
 
 if __name__ == '__main__':
     main()
