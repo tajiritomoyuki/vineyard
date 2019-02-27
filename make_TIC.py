@@ -51,7 +51,6 @@ class Register():
     def register(self, TICresult):
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
-            print("now")
             p.map(self.check_coord, tqdm(TICresult))
 
 def get_TIC(Tmag_limit):
@@ -87,7 +86,6 @@ def main():
     Tmag_limit = 13
     TICresult = get_TIC(Tmag_limit)
     # CTLdf = get_CTL(Tmag_limit)
-    print("load")
     for sector, camera, chip in product("12345", "1234", "1234"):
         regi = Register(sector, camera, chip)
         regi.get_wcs()
