@@ -85,9 +85,13 @@ def main():
     Tmag_limit = 13
     TICdf = get_TIC(Tmag_limit)
     CTLdf = get_CTL(Tmag_limit)
+    print("now")
     for sector, camera, chip in product("12345", "1234", "1234"):
+        print("now")
         regi = Register(sector, camera, chip)
+        print("now")
         regi.get_wcs()
+        print("now")
         regi.register()
 
 if __name__ == '__main__':
