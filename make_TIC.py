@@ -37,16 +37,16 @@ def get_CTL(Tmag_limit):
     return CTLdf
 
 def omit(TID, CTLdf):
-    return CTLdf
+    return TID
 
 def omit_dupilication(TICdf, CTLdf):
     iterator = TICdf["ID"].__iter__()
     #https://nb4799.neu.edu/wordpress/?p=783
-    ctx = mp.get_context("spawn")
+    ctx = mp.get_context("fork")
     manager = mp.Manager()
     CTLdf_shared = manager.list(CTLdf.values.tolist())
     with ctx.Pool(mp.cpu_count()) as p:
-        v = p.map(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
+        v = p.imap(functools.partial(omit, CTLdf=CTLdf_shared), iterator)
     for TID in v:
         print(TID)
 
