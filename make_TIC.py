@@ -53,14 +53,18 @@ class Register():
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
             print("now")
-            p.map(self.check_coord, TICdf.iterrows())
+            p.map(self.check_coord, TICresult)
 
 def get_TIC(Tmag_limit):
-    con = MySQLdb.connect(**data)
-    query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 20000;" % Tmag_limit
-    TICdf = pdsql.read_sql(query, con)
-    con.close()
-    return TICdf
+    # con = MySQLdb.connect(**data)
+    # query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 20000;" % Tmag_limit
+    # TICdf = pdsql.read_sql(query, con)
+    # con.close()
+    with MySQLdb.connect(**data) as cursor:
+        query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 20000;" % Tmag_limit
+        cursor.execute(query)
+        result = cursor.fetchall()
+    return result
 
 def get_CTL(Tmag_limit):
     con = MySQLdb.connect(**data)
@@ -82,13 +86,13 @@ def omit_dupilication(TICdf, CTLdf):
 
 def main():
     Tmag_limit = 13
-    TICdf = get_TIC(Tmag_limit)
-    CTLdf = get_CTL(Tmag_limit)
+    TICresult = get_TIC(Tmag_limit)
+    # CTLdf = get_CTL(Tmag_limit)
     print("load")
     for sector, camera, chip in product("12345", "1234", "1234"):
         regi = Register(sector, camera, chip)
         regi.get_wcs()
-        regi.register(TICdf)
+        regi.register(TICresult)
 
 if __name__ == '__main__':
     main()
