@@ -52,6 +52,7 @@ class Register():
     def register(self, TICdf):
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
+            print("now")
             p.imap_unordered(self.check_coord, TICdf.iterrows())
 
 def get_TIC(Tmag_limit):
@@ -87,7 +88,6 @@ def main():
     for sector, camera, chip in product("12345", "1234", "1234"):
         regi = Register(sector, camera, chip)
         regi.get_wcs()
-        print("now")
         regi.register(TICdf)
 
 if __name__ == '__main__':
