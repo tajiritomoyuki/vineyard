@@ -51,8 +51,6 @@ class Register():
 
     def register(self, TICdf):
         ctx = mp.get_context("spawn")
-        manager = mp.Manager()
-        CTLdf_shared = manager.list(CTLdf.values.tolist())
         with ctx.Pool(mp.cpu_count()) as p:
             p.imap_unordered(check_coord, TICdf.iterrows())
 
