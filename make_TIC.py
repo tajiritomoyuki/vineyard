@@ -60,7 +60,7 @@ def get_TIC(Tmag_limit):
     # TICdf = pdsql.read_sql(query, con)
     # con.close()
     with MySQLdb.connect(**data) as cursor:
-        query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 2000000;" % Tmag_limit
+        query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 200000;" % Tmag_limit
         cursor.execute(query)
         result = cursor.fetchall()
     return result
