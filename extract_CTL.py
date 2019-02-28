@@ -33,6 +33,7 @@ class extractCTL():
             TIC = cursor.fetchall()
             for TID_row in TIC:
                 TID = TID_row[0]
+                print(TID)
                 if TID in self.CTL:
                     query = "delete from chip%s_%s_%s where ID=%s" % (sector, camera, chip, TID)
                     # cursor.execute(query)
