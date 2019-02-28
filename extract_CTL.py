@@ -31,7 +31,7 @@ class extractCTL():
             query = "select ID from chip%s_%s_%s;" % (sector, camera, chip)
             cursor.execute(query)
             TIC = cursor.fetchall()
-            for TID_row in tqdm(TIC):
+            for TID_row in TIC:
                 TID = TID_row[0]
                 if TID in self.CTL:
                     query = "delete from chip%s_%s_%s where ID=%s;" % (sector, camera, chip, TID)
@@ -39,7 +39,7 @@ class extractCTL():
 
     def extract_all(self):
         ctx = mp.get_context("spawn")
-        with ctx.Pool(1) as p:
+        with ctx.Pool(mp.cpu_count()) as p:
             p.starmap(self.extract, product("12345", "1234", "1234"))
 
 
