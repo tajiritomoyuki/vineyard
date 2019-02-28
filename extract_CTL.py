@@ -28,15 +28,14 @@ class extractCTL():
 
     def extract(self, sector, camera, chip):
         with MySQLdb.connect(**data) as cursor:
-            query = "select ID from chip%s_%s_%s" % (sector, camera, chip)
+            query = "select ID from chip%s_%s_%s;" % (sector, camera, chip)
             cursor.execute(query)
             TIC = cursor.fetchall()
             for TID_row in TIC:
                 TID = TID_row[0]
                 if TID in self.CTL:
-                    query = "delete from chip%s_%s_%s where ID=%s" % (sector, camera, chip, TID)
-                    # cursor.execute(query)
-                    print(query)
+                    query = "delete from chip%s_%s_%s where ID=%s;" % (sector, camera, chip, TID)
+                    cursor.execute(query)
 
     def extract_all(self):
         ctx = mp.get_context("spawn")
