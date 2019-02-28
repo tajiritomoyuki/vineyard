@@ -16,7 +16,7 @@ data = {
     "db" : "TESS"
 }
 
-class extractCTL(CTL):
+class extractCTL():
     def __init__(self):
         self.CTL = None
 
