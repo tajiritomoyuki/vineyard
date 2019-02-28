@@ -35,7 +35,8 @@ class extractCTL(CTL):
                 TID = TID_row[0]
                 if TID in self.CTL:
                     query = "delete from chip%s_%s_%s where ID=%s" % (sector, camera, chip, TID)
-                    cursor.execute(query)
+                    # cursor.execute(query)
+                    print(query)
 
     def extract_all(self):
         ctx = mp.get_context("spawn")
