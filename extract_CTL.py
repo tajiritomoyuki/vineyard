@@ -23,11 +23,10 @@ class extractCTL():
     def get_CTL(self):
         con = MySQLdb.connect(**data)
         query = "select ID from CTLv7;"
-        self.CTL = pdsql.read_sql(query, con)
+        self.CTL = pdsql.read_sql(query, con).values
         con.close()
 
     def extract(self, sector, camera, chip):
-        print(sector, camera, chip)
         with MySQLdb.connect(**data) as cursor:
             query = "select ID from chip%s_%s_%s" % (sector, camera, chip)
             cursor.execute(query)
@@ -40,10 +39,9 @@ class extractCTL():
                     print(query)
 
     def extract_all(self):
-        print(self.CTL)
-        # ctx = mp.get_context("spawn")
-        # with ctx.Pool(5) as p:
-        #     p.starmap(self.extract, product("12345", "1234", "1234"))
+        ctx = mp.get_context("spawn")
+        with ctx.Pool(mp.cpu_count) as p:
+            p.starmap(self.extract, product("12345", "1234", "1234"))
 
 
 if __name__ == '__main__':
