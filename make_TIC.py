@@ -51,7 +51,7 @@ class Register():
     def register(self, TICresult):
         ctx = mp.get_context("spawn")
         with ctx.Pool(mp.cpu_count()) as p:
-            p.map(self.check_coord, tqdm(TICresult))
+            p.starmap(self.check_coord, tqdm(TICresult))
 
 def get_TIC(Tmag_limit):
     # con = MySQLdb.connect(**data)
