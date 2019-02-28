@@ -27,6 +27,7 @@ class extractCTL():
         con.close()
 
     def extract(self, sector, camera, chip):
+        print(sector, camera, chip)
         with MySQLdb.connect(**data) as cursor:
             query = "select ID from chip%s_%s_%s" % (sector, camera, chip)
             cursor.execute(query)
