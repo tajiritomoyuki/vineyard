@@ -162,4 +162,4 @@ if __name__ == '__main__':
     #     main(h5path)
     #     #except:
     #     #    pass
-    Parallel(n_jobs=16)(delayed(main)(h5path) for h5path in tqdm(h5list))
+    Parallel(n_jobs=32)(delayed(main)(h5path) for h5path in tqdm(h5list))

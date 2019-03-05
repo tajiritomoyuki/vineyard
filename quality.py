@@ -115,7 +115,7 @@ def main():
         #hdf集める
         h5list = gather_hdf(sector)
         #qualityを付与
-        Parallel(n_jobs=16)(delayed(add_quality_flg)(h5path, quality_arr) for h5path in tqdm(h5list))
+        Parallel(n_jobs=32)(delayed(add_quality_flg)(h5path, quality_arr) for h5path in tqdm(h5list))
 
 if __name__ == '__main__':
     main()
