@@ -16,7 +16,7 @@ from astropy.wcs import WCS
 #FFIのディレクトリ
 FFIdir = "/manta/tess/data/FFI"
 #出力先のディレクトリ
-outputdir = "/pike/pipeline/step1"
+outputdir = "/pike/pipeline/TIC1"
 
 #SQLにログインするためのデータ
 sql_data = {
@@ -28,7 +28,7 @@ sql_data = {
 
 def importTIC(sector, camera, CCD):
     with MySQLdb.connect(**sql_data) as cursor:
-        query = "select ID, ra, `dec`, Tmag from CTLchip%s_%s_%s;" % (sector, camera, CCD)
+        query = "select ID, ra, `dec`, Tmag from chip%s_%s_%s;" % (sector, camera, CCD)
         cursor.execute(query)
         result = cursor.fetchall()
     return result
