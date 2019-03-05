@@ -19,11 +19,12 @@ def check_lack(date, sector, camera, chip, yonmoji):
 
 def main():
     #各セクターごとに足りないFFIがないか検索
-    for sector in range(1, 6):
-        fitslist = glob.glob(os.path.join(datadir, "*s000%s*ffic.fits" % sector))
-        datelist = list(set([os.path.basename(fitspath).split("-")[0] for fitspath in fitslist]))
-        yonmoji = fitslist[0].split("-")[4]
-        Parallel(n_jobs=5)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
+    # for sector in range(1, 6):
+    sector = 6
+    fitslist = glob.glob(os.path.join(datadir, "*s000%s*ffic.fits" % sector))
+    datelist = list(set([os.path.basename(fitspath).split("-")[0] for fitspath in fitslist]))
+    yonmoji = fitslist[0].split("-")[4]
+    Parallel(n_jobs=32)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
 
 
 if __name__ == '__main__':
