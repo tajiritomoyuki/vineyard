@@ -24,6 +24,7 @@ def search(fitspath):
 def main():
     fitslist = glob.glob(os.path.join(datadir, "*s0006*ffic.fits"))
     Parallel(n_jobs=32)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
+    Parallel(n_jobs=10)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
 
 if __name__ == '__main__':
     main()
