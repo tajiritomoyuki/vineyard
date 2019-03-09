@@ -13,11 +13,11 @@ from astropy.io import fits
 from astroquery.mast import Catalogs
 import matplotlib.pyplot as plt
 
-step1 = "/pike/pipeline/TIC1"
-step2 = "/pike/pipeline/TIC2"
+step1 = "/pike/pipeline/step1"
+step2 = "/pike/pipeline/step2"
 
 def load_h5():
-    h5list = glob.glob(os.path.join(step1, "*.h5"))
+    h5list = glob.glob(os.path.join(step1, "*_6_?_?.h5"))
     return h5list
 
 def load_data(f):
