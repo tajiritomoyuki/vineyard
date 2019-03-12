@@ -37,7 +37,7 @@ def process(s, x, y, result):
 
 def main():
     with MySQLdb.connect(**data) as cursor:
-        query = "select ID, ra, `dec` from CTLv7 where `dec`<30;"
+        query = "select ID, ra, `dec` from CTLv7 where `dec`<0;"
         cursor.execute(query)
         result = cursor.fetchall()
     #Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("12", "1234","1234")])
