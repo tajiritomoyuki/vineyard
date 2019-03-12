@@ -16,7 +16,7 @@ from astropy.wcs import WCS
 #FFIのディレクトリ
 FFIdir = "/manta/tess/data/FFI"
 #出力先のディレクトリ
-outputdir = "/pike/pipeline/step1"
+outputdir = "/pike/pipeline/TIC1"
 
 #SQLにログインするためのデータ
 sql_data = {
