@@ -54,10 +54,6 @@ class Register():
             p.map(self.check_coord, tqdm(TICresult))
 
 def get_TIC(Tmag_limit):
-    # con = MySQLdb.connect(**data)
-    # query = "select ID, ra, `dec` from TICv7s where Tmag < %s limit 20000;" % Tmag_limit
-    # TICdf = pdsql.read_sql(query, con)
-    # con.close()
     with MySQLdb.connect(**data) as cursor:
         query = "select ID, ra, `dec` from TICv7s where Tmag < %s;" % Tmag_limit
         cursor.execute(query)
@@ -73,7 +69,6 @@ def get_CTL(Tmag_limit):
 
 def omit_dupilication(TICdf, CTLdf):
     iterator = TICdf["ID"].__iter__()
-    #https://nb4799.neu.edu/wordpress/?p=783
     ctx = mp.get_context("spawn")
     manager = mp.Manager()
     CTLdf_shared = manager.list(CTLdf.values.tolist())
@@ -85,7 +80,6 @@ def omit_dupilication(TICdf, CTLdf):
 def main():
     Tmag_limit = 13
     TICresult = get_TIC(Tmag_limit)
-    # CTLdf = get_CTL(Tmag_limit)
     for sector, camera, chip in product("6", "1234", "1234"):
         regi = Register(sector, camera, chip)
         regi.get_wcs()

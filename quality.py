@@ -13,9 +13,16 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 
+pattern = "CTL"
+
 FFIdir = "/manta/tess/data/FFI"
-step2 = "/pike/pipeline/TIC2"
-step3 = "/pike/pipeline/TIC3"
+
+if pattern == "CTL":
+    step2 = "/pike/pipeline/step2"
+    step3 = "/pike/pipeline/step3"
+elif pattern == "TIC":
+    step2 = "/pike/pipeline/TIC2"
+    step3 = "/pike/pipeline/TIC3"
 
 def loadFFI(sector, camera, CCD):
     fitslist = glob.glob(os.path.join(FFIdir, "*%s-%s-%s-*ffic.fits" % (sector, camera, CCD)))

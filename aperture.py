@@ -13,12 +13,16 @@ from astropy.io import fits
 from astroquery.mast import Catalogs
 import matplotlib.pyplot as plt
 
-step1 = "/pike/pipeline/TIC1"
-step2 = "/pike/pipeline/TIC2"
 
-def load_h5():
-    h5list = glob.glob(os.path.join(step1, "*_6_?_?.h5"))
-    return h5list
+pattern = "CTL"
+
+if pattern == "CTL":
+    step1 = "/pike/pipeline/step1"
+    step2 = "/pike/pipeline/step2"
+elif pattern == "TIC":
+    step1 = "/pike/pipeline/TIC1"
+    step2 = "/pike/pipeline/TIC2"
+
 
 def load_data(f):
     time = np.array(f["TPF"]["TIME"])
@@ -156,10 +160,6 @@ def main(h5path):
 
 if __name__ == '__main__':
     #ファイルリストを取得
-    h5list = load_h5()
-    # for h5path in tqdm(h5list):
-    #     #try:
-    #     main(h5path)
-    #     #except:
-    #     #    pass
+    sector = 6
+    h5list = h5list = glob.glob(os.path.join(step1, "*_%s_?_?.h5" % sector))
     Parallel(n_jobs=10)(delayed(main)(h5path) for h5path in tqdm(h5list))

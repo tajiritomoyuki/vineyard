@@ -13,10 +13,21 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 
+pattern = "CTL"
+
 #FFIのディレクトリ
 FFIdir = "/manta/tess/data/FFI"
-#出力先のディレクトリ
-outputdir = "/pike/pipeline/TIC1"
+
+if pattern == "CTL":
+    #出力先のディレクトリ
+    outputdir = "/pike/pipeline/step1"
+    #テーブル名
+    table = "CTLchip"
+elif pattern == "TIC":
+    #出力先のディレクトリ
+    outputdir = "/pike/pipeline/TIC1"
+    table = "chip"
+
 
 #SQLにログインするためのデータ
 sql_data = {
@@ -28,7 +39,7 @@ sql_data = {
 
 def importTIC(sector, camera, CCD):
     with MySQLdb.connect(**sql_data) as cursor:
-        query = "select ID, ra, `dec`, Tmag from chip%s_%s_%s;" % (sector, camera, CCD)
+        query = "select ID, ra, `dec`, Tmag from %s%s_%s_%s;" % (table, sector, camera, CCD)
         cursor.execute(query)
         result = cursor.fetchall()
     return result
