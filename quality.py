@@ -30,7 +30,7 @@ def loadFFI(sector, camera, CCD):
     return fitslist
 
 def gather_hdf(sector):
-    h5list = glob.glob(os.path.join(step2, "*_%s_?_?.h5" % sector))
+    h5list = glob.glob(os.path.join(step2, "*_%s_1_?.h5" % sector))
     return h5list
 
 def fits2pos(fitslist):
