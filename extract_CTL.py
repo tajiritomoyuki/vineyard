@@ -39,7 +39,7 @@ class extractCTL():
 
     def extract_all(self):
         ctx = mp.get_context("spawn")
-        with ctx.Pool(mp.cpu_count()) as p:
+        with ctx.Pool(16) as p:
             p.starmap(self.extract, product("6", "1234", "1234"))
 
 
