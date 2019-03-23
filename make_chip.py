@@ -41,7 +41,7 @@ def main():
         cursor.execute(query)
         result = cursor.fetchall()
     #Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("12", "1234","1234")])
-    for s, x, y in product("6", "1", "1234"):
+    for s, x, y in product("7", "1", "1234"):
         process(s, x, y, result)
 
 
