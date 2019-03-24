@@ -8,7 +8,7 @@ from tqdm import tqdm
 from joblib import Parallel, delayed
 from itertools import product
 
-datadir = "/manta/tess/data/FFI"
+datadir = "/stingray/tess/data/FFI"
 
 def check_lack(date, sector, camera, chip, yonmoji):
     tarname = "%s-s000%s-%s-%s-%s-s_ffic.fits" % (date, sector, camera, chip, yonmoji)

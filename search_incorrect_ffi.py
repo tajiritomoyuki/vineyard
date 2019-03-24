@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from joblib import Parallel, delayed
 
-datadir = "/manta/tess/data/FFI"
+datadir = "/stingray/tess/data/FFI"
 
 def search(fitspath):
     #不正なfitsファイルがないか検索
