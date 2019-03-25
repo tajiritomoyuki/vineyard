@@ -16,7 +16,7 @@ from astropy.wcs import WCS
 pattern = "CTL"
 
 #FFIのディレクトリ
-FFIdir = "/manta/tess/data/FFI"
+FFIdir = "/stingray/tess/data/FFI"
 
 if pattern == "CTL":
     #出力先のディレクトリ
@@ -130,5 +130,5 @@ def main(sector, camera, CCD):
 
 if __name__ == '__main__':
     #Parallel(n_jobs=2)([delayed(main)(sector, camera, CCD) for sector, camera, CCD in product("12", "1234", "1234")])
-    for sector, camera, CCD in product("6", "1", "1234"):
+    for sector, camera, CCD in product("7", "1234", "1234"):
         main(sector, camera, CCD)
