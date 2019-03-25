@@ -8,7 +8,7 @@ from tqdm import tqdm
 from joblib import Parallel, delayed
 from itertools import product
 
-datadir = "/manta/tess/data/FFI"
+datadir = "/stingray/tess/data/FFI"
 
 def check_lack(date, sector, camera, chip, yonmoji):
     tarname = "%s-s000%s-%s-%s-%s-s_ffic.fits" % (date, sector, camera, chip, yonmoji)
@@ -20,11 +20,11 @@ def check_lack(date, sector, camera, chip, yonmoji):
 def main():
     #各セクターごとに足りないFFIがないか検索
     # for sector in range(1, 6):
-    sector = 6
+    sector = 7
     fitslist = glob.glob(os.path.join(datadir, "*s000%s*ffic.fits" % sector))
     datelist = list(set([os.path.basename(fitspath).split("-")[0] for fitspath in fitslist]))
     yonmoji = fitslist[0].split("-")[4]
-    Parallel(n_jobs=32)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
+    Parallel(n_jobs=20)(delayed(check_lack)(date, sector, camera, chip, yonmoji) for date, camera, chip in product(datelist, "1234", "1234"))
 
 
 if __name__ == '__main__':

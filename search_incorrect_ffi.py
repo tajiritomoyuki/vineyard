@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from joblib import Parallel, delayed
 
-datadir = "/manta/tess/data/FFI"
+datadir = "/stingray/tess/data/FFI"
 
 def search(fitspath):
     #不正なfitsファイルがないか検索
@@ -22,8 +22,8 @@ def search(fitspath):
         subprocess.run(cmd, shell=True)
 
 def main():
-    fitslist = glob.glob(os.path.join(datadir, "*s0006*ffic.fits"))
-    Parallel(n_jobs=25)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
+    fitslist = glob.glob(os.path.join(datadir, "*s0007*ffic.fits"))
+    Parallel(n_jobs=20)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
 
 if __name__ == '__main__':
     main()
