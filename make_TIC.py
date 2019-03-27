@@ -19,7 +19,7 @@ data = {
     "host" : "localhost",
     "db" : "TESS"
 }
-datadir = "/manta/tess/data/FFI"
+datadir = "/stingray/tess/data/FFI"
 
 class Register():
     def __init__(self, sector, camera, chip):
