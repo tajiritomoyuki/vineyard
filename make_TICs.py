@@ -19,7 +19,7 @@ data = {
     "host" : "localhost",
     "db" : "TESS"
 }
-datadir = "/stingray/tess/data/FFI"
+datadir_org = "/%s/tess/data/FFI"
 
 class Register():
     def __init__(self, sector, camera, chip):
@@ -30,6 +30,11 @@ class Register():
         self.bounds = None
 
     def get_wcs(self):
+        #sectorで条件分岐
+        if self.sector < 7:
+            datadir = datadir_org % "manta"
+        else:
+            datadir = datadir_org % "stingray"
         fitslist = glob.glob(os.path.join(datadir, "*%s-%s-%s*.fits" % (self.sector, self.camera, self.chip)))
         hdu = fits.open(fitslist[0])
         self.wcs = WCS(hdu[1].header)

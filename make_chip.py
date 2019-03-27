@@ -16,9 +16,14 @@ data = {
     "host" : "localhost",
     "db" : "TESS"
 }
-datadir = "/manta/tess/data/FFI"
+datadir_org = "/%s/tess/data/FFI"
 
 def process(s, x, y, result):
+    #sectorで条件分岐
+    if s < 7:
+        datadir = datadir_org % "manta"
+    else:
+        datadir = datadir_org % "stingray"
     fitslist = glob.glob(os.path.join(datadir, "*%s-%s-%s*.fits" % (s, x, y)))
     hdu = fits.open(fitslist[0])
     wcs = WCS(hdu[1].header)
