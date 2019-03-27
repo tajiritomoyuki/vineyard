@@ -31,7 +31,7 @@ class Register():
 
     def get_wcs(self):
         #sectorで条件分岐
-        if self.sector < 7:
+        if int(self.sector) < 7:
             datadir = datadir_org % "manta"
         else:
             datadir = datadir_org % "stingray"

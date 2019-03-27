@@ -20,7 +20,7 @@ datadir_org = "/%s/tess/data/FFI"
 
 def process(s, x, y, result):
     #sectorで条件分岐
-    if s < 7:
+    if int(s) < 7:
         datadir = datadir_org % "manta"
     else:
         datadir = datadir_org % "stingray"
