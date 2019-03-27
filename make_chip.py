@@ -16,7 +16,7 @@ data = {
     "host" : "localhost",
     "db" : "TESS"
 }
-datadir = "/stingray/tess/data/FFI"
+datadir = "/manta/tess/data/FFI"
 
 def process(s, x, y, result):
     fitslist = glob.glob(os.path.join(datadir, "*%s-%s-%s*.fits" % (s, x, y)))
@@ -40,7 +40,7 @@ def main():
         query = "select ID, ra, `dec` from CTLv7 where `dec`<30;"
         cursor.execute(query)
         result = cursor.fetchall()
-    Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("5", "1","1234")])
+    Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("45", "1", "1234")])
     # for s, x, y in product("7", "1234", "1234"):
     #     process(s, x, y, result)
 
