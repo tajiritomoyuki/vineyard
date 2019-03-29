@@ -55,7 +55,7 @@ class Register():
 
     def register(self, TICresult):
         ctx = mp.get_context("spawn")
-        with ctx.Pool(16) as p:
+        with ctx.Pool(10) as p:
             p.map(self.check_coord, tqdm(TICresult))
 
 def get_TIC(Tmag_limit):
