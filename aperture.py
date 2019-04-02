@@ -14,7 +14,7 @@ from astroquery.mast import Catalogs
 import matplotlib.pyplot as plt
 
 
-pattern = "CTL"
+pattern = "TIC"
 
 if pattern == "CTL":
     step1 = "/pike/pipeline/step1"
