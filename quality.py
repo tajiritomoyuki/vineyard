@@ -13,7 +13,7 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS
 
-pattern = "TIC"
+pattern = "CTL"
 
 FFIdir = "/stingray/tess/data/FFI"
 
