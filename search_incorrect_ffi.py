@@ -22,8 +22,8 @@ def search(fitspath):
         subprocess.run(cmd, shell=True)
 
 def main():
-    fitslist = glob.glob(os.path.join(datadir, "*s0007*ffic.fits"))
-    Parallel(n_jobs=20)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
+    fitslist = glob.glob(os.path.join(datadir, "*s0008*ffic.fits"))
+    Parallel(n_jobs=25)(delayed(search)(fitspath) for fitspath in tqdm(fitslist))
 
 if __name__ == '__main__':
     main()
