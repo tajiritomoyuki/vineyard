@@ -15,7 +15,7 @@ from astropy.wcs import WCS
 
 pattern = "CTL"
 
-FFIdir = "/manta/tess/data/FFI"
+FFIdir = "/stingray/tess/data/FFI"
 
 if pattern == "CTL":
     step2 = "/pike/pipeline/step2"
@@ -118,7 +118,7 @@ def add_quality_flg(h5path, quality_arr):
 
 def main():
     #各セクターごとにクオリティフラグを作成
-    for sector in [4, 6]:
+    for sector in [7, 8]:
         # sector = 4
         quality_arr = make_quality_flag(sector)
         #hdf集める
