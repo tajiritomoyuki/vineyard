@@ -15,7 +15,7 @@ from astropy.wcs import WCS
 
 pattern = "CTL"
 
-FFIdir = "/stingray/tess/data/FFI"
+FFIdir = "/manta/tess/data/FFI"
 
 if pattern == "CTL":
     step2 = "/pike/pipeline/step2"
