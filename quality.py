@@ -15,7 +15,7 @@ from astropy.wcs import WCS
 
 pattern = "CTL"
 
-FFIdir = "/stingray/tess/data/FFI"
+FFIdir = "/manta/tess/data/FFI"
 
 if pattern == "CTL":
     step2 = "/pike/pipeline/step2"
@@ -85,7 +85,7 @@ def make_quality_flag(sector, sigma=2.):
             quality2 = pos2quality(x_diff2, y_diff2, 3.)
             #両者で少なくともひとつひっかかったqualityを集める
             quality = np.logical_or(quality1, quality2)
-            np.append(quality, 0)
+            quality = np.append(quality, 0)
         else:
             #x, yの位置の時系列データからqualityを算出
             quality = pos2quality(x_center, y_center, sigma)
@@ -118,7 +118,7 @@ def add_quality_flg(h5path, quality_arr):
 
 def main():
     #各セクターごとにクオリティフラグを作成
-    for sector in [7, 8]:
+    for sector in [4, 6]:
         # sector = 4
         quality_arr = make_quality_flag(sector)
         #hdf集める
