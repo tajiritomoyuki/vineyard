@@ -85,7 +85,7 @@ def omit_dupilication(TICdf, CTLdf):
 def main():
     Tmag_limit = 13
     TICresult = get_TIC(Tmag_limit)
-    for sector, camera, chip in product("67", "1", "1234"):
+    for sector, camera, chip in product("8", "1", "1234"):
         regi = Register(sector, camera, chip)
         regi.get_wcs()
         regi.register(TICresult)
