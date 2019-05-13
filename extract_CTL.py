@@ -39,12 +39,9 @@ class extractCTL():
 
     def extract_all(self):
         ctx = mp.get_context("spawn")
-<<<<<<< HEAD
         with ctx.Pool(25) as p:
-=======
-        with ctx.Pool(32) as p:
->>>>>>> 0d8c8596ae48e358c25596f10d814d67fdf04799
             p.starmap(self.extract, product("8", "1234", "1234"))
+
 
 
 if __name__ == '__main__':
