@@ -85,7 +85,7 @@ def make_quality_flag(sector, sigma=2.):
             quality2 = pos2quality(x_diff2, y_diff2, 3.)
             #両者で少なくともひとつひっかかったqualityを集める
             quality = np.logical_or(quality1, quality2)
-            np.append(quality, 0)
+            quality = np.append(quality, 0)
         else:
             #x, yの位置の時系列データからqualityを算出
             quality = pos2quality(x_center, y_center, sigma)
