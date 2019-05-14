@@ -20,7 +20,7 @@ def check_lack(date, sector, camera, chip, yonmoji):
 def main():
     #各セクターごとに足りないFFIがないか検索
     # for sector in range(1, 6):
-    sector = 8
+    sector = 9
     fitslist = glob.glob(os.path.join(datadir, "*s000%s*ffic.fits" % sector))
     datelist = list(set([os.path.basename(fitspath).split("-")[0] for fitspath in fitslist]))
     yonmoji = fitslist[0].split("-")[4]
