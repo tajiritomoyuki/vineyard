@@ -75,7 +75,6 @@ def get_wcs(fitsfile):
     return wcs, bounds
 
 def radec2pix(ra, dec, wcs):
-    print(wcs.naxis)
     coord = SkyCoord(ra, dec, unit="deg")
     px, py = coord.to_pixel(wcs)
     return px, py
@@ -118,7 +117,7 @@ def main(sector, camera, CCD):
     #fitsファイルからtime, fluxを取得
     time, FFIflux = fits2data(fitslist)
     #wcsを取得
-    wcs, bounds = get_wcs(fitslist[0])
+    wcs, bounds = get_wcs(fitslist[1])
     print("making h5file...")
     for TID, ra, dec, Tmag in tqdm(data):
         #ra, decからpixelを抽出
