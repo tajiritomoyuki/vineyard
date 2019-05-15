@@ -75,6 +75,7 @@ def get_wcs(fitsfile):
     return wcs, bounds
 
 def radec2pix(ra, dec, wcs):
+    print(wcs.naxis)
     coord = SkyCoord(ra, dec, unit="deg")
     px, py = coord.to_pixel(wcs)
     return px, py
