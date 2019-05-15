@@ -67,11 +67,16 @@ def fits2data(fitslist):
     del f_list
     return time, flux
 
-def get_wcs(fitsfile):
-    hdu = fits.open(fitsfile)
-    wcs = WCS(hdu[1].header)
-    bounds = hdu[1].data.shape
-    hdu.close()
+def get_wcs(fitslist):
+    for fitspath in fitslist:
+        hdu = fits.open(fitsfile)
+        wcs = WCS(hdu[1].header)
+        bounds = hdu[1].data.shape
+        hdu.close()
+        if wcs.naxis == 2:
+            break
+    else:
+        raise ValueError("WCS should contain celestial component")
     return wcs, bounds
 
 def radec2pix(ra, dec, wcs):
@@ -117,7 +122,7 @@ def main(sector, camera, CCD):
     #fitsファイルからtime, fluxを取得
     time, FFIflux = fits2data(fitslist)
     #wcsを取得
-    wcs, bounds = get_wcs(fitslist[1])
+    wcs, bounds = get_wcs(fitslist)
     print("making h5file...")
     for TID, ra, dec, Tmag in tqdm(data):
         #ra, decからpixelを抽出
