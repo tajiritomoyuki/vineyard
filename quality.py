@@ -118,13 +118,13 @@ def add_quality_flg(h5path, quality_arr):
 
 def main():
     #各セクターごとにクオリティフラグを作成
-    for sector in [7, 8]:
-        # sector = 4
-        quality_arr = make_quality_flag(sector)
-        #hdf集める
-        h5list = gather_hdf(sector)
-        #qualityを付与
-        Parallel(n_jobs=32)(delayed(add_quality_flg)(h5path, quality_arr) for h5path in tqdm(h5list))
+    # for sector in [7, 8]:
+    sector = 9
+    quality_arr = make_quality_flag(sector)
+    #hdf集める
+    h5list = gather_hdf(sector)
+    #qualityを付与
+    Parallel(n_jobs=32)(delayed(add_quality_flg)(h5path, quality_arr) for h5path in tqdm(h5list))
 
 if __name__ == '__main__':
     main()

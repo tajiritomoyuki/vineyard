@@ -130,5 +130,5 @@ def main(sector, camera, CCD):
 
 if __name__ == '__main__':
     #Parallel(n_jobs=2)([delayed(main)(sector, camera, CCD) for sector, camera, CCD in product("12", "1234", "1234")])
-    for sector, camera, CCD in product("8", "1234", "1234"):
+    for sector, camera, CCD in product("9", "1234", "1234"):
         main(sector, camera, CCD)
