@@ -69,7 +69,7 @@ def fits2data(fitslist):
 
 def get_wcs(fitslist):
     for fitspath in fitslist:
-        hdu = fits.open(fitsfile)
+        hdu = fits.open(fitspath)
         wcs = WCS(hdu[1].header)
         bounds = hdu[1].data.shape
         hdu.close()
