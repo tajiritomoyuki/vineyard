@@ -11,7 +11,7 @@ from joblib import Parallel, delayed
 
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
-from astropy.wcs import WCS
+from astropy.wcs import WCS, WCSSUB_LONGITUDE, WCSSUB_LATITUDE, WCSSUB_CELESTIAL
 
 pattern = "CTL"
 
@@ -73,7 +73,7 @@ def get_wcs(fitslist):
         wcs = WCS(hdu[1].header)
         bounds = hdu[1].data.shape
         hdu.close()
-        if wcs.naxis == 2:
+        if wcs.sub([WCSSUB_LONGITUDE, WCSSUB_LATITUDE]).naxis == 2:
             break
     else:
         raise ValueError("WCS should contain celestial component")
