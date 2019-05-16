@@ -72,7 +72,7 @@ def make_quality_flag(sector, sigma=2.):
         #x, yの位置の時系列データを取得
         x_center, y_center = fits2pos(fitslist)
         #sector4,6のみ別処理
-        if sector in [4, 6, 7, 8]:
+        if sector in [4, 6, 7, 8, 9]:
             #差分を取得
             x_diff1 = np.diff(x_center)
             y_diff1 = np.diff(y_center)
