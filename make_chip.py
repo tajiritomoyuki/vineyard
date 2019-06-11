@@ -11,9 +11,9 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS, NoConvergence
 data = {
-    "user" : "root",
-    "passwd" : "ocean",
-    "host" : "localhost",
+    "user" : "fisher",
+    "passwd" : "atlantic",
+    "host" : "133.11.231.118",
     "db" : "TESS"
 }
 datadir_org = "/%s/tess/data/FFI"
@@ -45,7 +45,7 @@ def main():
         query = "select ID, ra, `dec` from CTLv7 where `dec`<30;"
         cursor.execute(query)
         result = cursor.fetchall()
-    Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("9", "1234", "1234")])
+    Parallel(n_jobs=4)([delayed(process)(s, x, y, result) for s, x, y in product("10", "1234", "1234")])
     # for s, x, y in product("7", "1234", "1234"):
     #     process(s, x, y, result)
 

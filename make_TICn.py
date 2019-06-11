@@ -14,9 +14,9 @@ from astropy.coordinates import SkyCoord
 from astropy.wcs import WCS, NoConvergence
 
 data = {
-    "user" : "root",
-    "passwd" : "ocean",
-    "host" : "localhost",
+    "user" : "fisher",
+    "passwd" : "atlantic",
+    "host" : "133.11.231.118",
     "db" : "TESS"
 }
 datadir_org = "/%s/tess/data/FFI"
