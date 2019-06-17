@@ -31,11 +31,12 @@ elif pattern == "TIC":
 
 #SQLにログインするためのデータ
 sql_data = {
-      "user" : "root",
-    "passwd" : "ocean",
-      "host" : "localhost",
-        "db" : "TESS",
+    "user" : "fisher",
+    "passwd" : "atlantic",
+    "host" : "133.11.231.118",
+    "db" : "TESS"
 }
+
 
 def importTIC(sector, camera, CCD):
     with MySQLdb.connect(**sql_data) as cursor:
