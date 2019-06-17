@@ -45,7 +45,7 @@ def importTIC(sector, camera, CCD):
     return result
 
 def loadFFI(sector, camera, CCD):
-    fitslist = glob.glob(os.path.join(FFIdir, "*%s-%s-%s-*ffic.fits" % (sector, camera, CCD)))
+    fitslist = glob.glob(os.path.join(FFIdir, "*s%04d-%s-%s-*ffic.fits" % (sector, camera, CCD)))
     fitslist.sort()
     return fitslist
 
@@ -135,5 +135,5 @@ def main(sector, camera, CCD):
 
 if __name__ == '__main__':
     #Parallel(n_jobs=2)([delayed(main)(sector, camera, CCD) for sector, camera, CCD in product("12", "1234", "1234")])
-    for sector, camera, CCD in product("9", "1234", "1234"):
+    for sector, camera, CCD in product([10], "1234", "1234"):
         main(sector, camera, CCD)

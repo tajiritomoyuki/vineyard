@@ -160,6 +160,6 @@ def main(h5path):
 
 if __name__ == '__main__':
     #ファイルリストを取得
-    sector = 9
+    sector = 10
     h5list = h5list = glob.glob(os.path.join(step1, "*_%s_?_?.h5" % sector))
     Parallel(n_jobs=30)(delayed(main)(h5path) for h5path in tqdm(h5list))
